@@ -1,6 +1,10 @@
 fastapi
 uvicorn
-torch
-transformers
+pydantic
+rdkit-pypi
+numpy<2
+Pillow
+pubchempy
 scikit-learn
-pandas
+transformers
+torch
