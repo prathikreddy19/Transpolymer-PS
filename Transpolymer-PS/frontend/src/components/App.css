@@ -1021,17 +1021,36 @@ a:hover {
 .auth-links a {
   margin-left: 5px;
 }
-@media (max-width: 768px) {
-  .tech-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-    padding: 0 1rem;
+/* —— Mobile only: stack team cards, remove fixed height, shrink gaps —— */
+@media (max-width: 600px) {
+  .team-members {
+    display: grid;
+    grid-template-columns: 1fr !important;   /* one card per row */
+    gap: 1rem !important;                     /* tighter vertical space */
+    margin-top: 1rem !important;
+    height: auto !important;                  /* let cards expand naturally */
   }
 
-  .tech-card {
-    width: 100%;
-    max-width: 90vw;
+  .team-member {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .member-photo.placeholder {
+    height: 150px;         /* shorter photo area so title is visible */
+  }
+
+  .team-member h4 {
+    font-size: 1.25rem;
+    margin: 0.75rem 0 0.25rem;
+  }
+
+  .member-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .member-bio {
+    padding: 0 1rem 1rem;
   }
 }
