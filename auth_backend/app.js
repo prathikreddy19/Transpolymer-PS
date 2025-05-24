@@ -17,10 +17,16 @@ const PORT = process.env.PORT || 4000;  // Default to 4000 to avoid React confli
 
 connectDB();
 
+import cors from "cors";
+
 app.use(cors({
-  origin: "http://localhost:3000", // Allow frontend to connect
+  origin: [
+    "http://localhost:3000",
+    "https://transpolymer.vercel.app"  // your deployed frontend URL
+  ],
   credentials: true
 }));
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 
