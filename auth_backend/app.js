@@ -1,7 +1,6 @@
-
 import express from "express";
 import bodyParser from "body-parser";
-import cors from "cors";
+import cors from "cors"; // ✅ Only once
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
@@ -14,16 +13,14 @@ import connectDB from "./db/connect.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;  // Default to 4000 to avoid React conflict
+const PORT = process.env.PORT || 4000;
 
 connectDB();
-
-import cors from "cors";
 
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://transpolymer.vercel.app"  // your deployed frontend URL
+    "https://transpolymer.vercel.app"  // ✅ Your deployed frontend
   ],
   credentials: true
 }));
