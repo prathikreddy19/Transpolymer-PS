@@ -8,7 +8,7 @@ function UserProfile() {
   const storedUser = JSON.parse(localStorage.getItem("user") || "null");
   const [user, setUser] = useState({
     username: storedUser?.username || "",
-    email:    storedUser?.email    || "",
+    email: storedUser?.email || "",
     lastLogin: null,
     previousLogins: [],
     role: "",
@@ -18,18 +18,19 @@ function UserProfile() {
     createdAt: null,
   });
 
-  const [newPassword, setNewPassword]           = useState("");
-  const [confirmPassword, setConfirmPassword]   = useState("");
-  const [message, setMessage]                   = useState("");
-  const [messageType, setMessageType]           = useState("");
-  const [loading, setLoading]                   = useState(true);
-  const [activeTab, setActiveTab]               = useState("info");
-  //const [showLoginHistory, setShowLoginHistory] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("info");
 
- useEffect(() => {
+  useEffect(() => {
     setLoading(true);
     axios
-      .get("/api/users/profile", { withCredentials: true })
+      .get("https://auth-backend-4ro8.onrender.com/api/users/profile", {
+        withCredentials: true
+      })
       .then((res) => {
         setUser(res.data);
         setLoading(false);
@@ -37,7 +38,6 @@ function UserProfile() {
       .catch((err) => {
         console.error("Profile fetch error:", err);
         setLoading(false);
-        // Kick back to login if cookie is missing / expired
         if (err.response?.status === 401) navigate("/login");
       });
   }, [navigate]);
@@ -55,7 +55,10 @@ function UserProfile() {
       return;
     }
     setLoading(true);
-    axios.post('/api/users/update-password', { newPassword }, { withCredentials: true })
+    axios.post('https://auth-backend-4ro8.onrender.com/api/users/update-password',
+      { newPassword },
+      { withCredentials: true }
+    )
       .then(res => {
         setMessage(res.data.message || "Password updated successfully");
         setMessageType('success');
@@ -70,78 +73,94 @@ function UserProfile() {
         setLoading(false);
       });
   };
+
   const handleBackToDashboard = () => {
     navigate('/dashboard');
   };
 
-  // ... UI code remains unchanged
-
   return (
     <div className="user-profile-container">
-    <div className="user-profile">
-      <div className="profile-header">
-        <h2><i className="fas fa-user"></i> Profile</h2>
-        <button className="back-button" onClick={handleBackToDashboard}>
-          <i className="fas fa-arrow-left"></i>
-        </button>
-      </div>
-
-      {loading ? (
-        <div className="loading-spinner">
-          <i className="fas fa-spinner fa-spin"></i>
-          Loading profile...
+      <div className="user-profile">
+        <div className="profile-header">
+          <h2><i className="fas fa-user"></i> Profile</h2>
+          <button className="back-button" onClick={handleBackToDashboard}>
+            <i className="fas fa-arrow-left"></i>
+          </button>
         </div>
-      ) : (
-        <>
-          {message && (
-            <div className={`message ${messageType}`}>
-              <i className={`fas ${messageType === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
-              {message}
-              <button className="close-message" onClick={() => setMessage('')}>&times;</button>
-            </div>
-          )}
 
-          <div className="profile-navbar">
-            <ul>
-              <li
-                className={activeTab === 'info' ? 'active' : ''}
-                onClick={() => setActiveTab('info')}
-              >
-                <i className="fas fa-id-card"></i> Info
-              </li>
-            </ul>
+        {loading ? (
+          <div className="loading-spinner">
+            <i className="fas fa-spinner fa-spin"></i>
+            Loading profile...
           </div>
+        ) : (
+          <>
+            {message && (
+              <div className={`message ${messageType}`}>
+                <i className={`fas ${messageType === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
+                {message}
+                <button className="close-message" onClick={() => setMessage('')}>&times;</button>
+              </div>
+            )}
 
-          {activeTab === 'info' && (
-            <div className="profile-section">
-              <h3>Personal Information</h3>
-              <div className="profile-picture">
-                {user.profilePicture ? (
-                  <img src={user.profilePicture} alt="Profile" />
-                ) : (
-                  <div className="default-avatar">{user.username[0]}</div>
-                )}
-              </div>
-              <div className="profile-info">
-                <div className="info-item">
-                  <div className="info-label"><i className="fas fa-user"></i> Username</div>
-                  <div className="info-value">{user.username}</div>
-                </div>
-                <div className="info-item">
-                  <div className="info-label"><i className="fas fa-envelope"></i> Email</div>
-                  <div className="info-value">{user.email}</div>
-                </div>
-                <div className="info-item">
-                  <div className="info-label"><i className="fas fa-calendar-alt"></i> Joined</div>
-                  <div className="info-value">{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</div>
-                </div>
-              </div>
+            <div className="profile-navbar">
+              <ul>
+                <li
+                  className={activeTab === 'info' ? 'active' : ''}
+                  onClick={() => setActiveTab('info')}
+                >
+                  <i className="fas fa-id-card"></i> Info
+                </li>
+              </ul>
             </div>
-          )}
-        </>
-      )}
+
+            {activeTab === 'info' && (
+              <div className="profile-section">
+                <h3>Personal Information</h3>
+                <div className="profile-picture">
+                  {user.profilePicture ? (
+                    <img src={user.profilePicture} alt="Profile" />
+                  ) : (
+                    <div className="default-avatar">{user.username[0]}</div>
+                  )}
+                </div>
+                <div className="profile-info">
+                  <div className="info-item">
+                    <div className="info-label"><i className="fas fa-user"></i> Username</div>
+                    <div className="info-value">{user.username}</div>
+                  </div>
+                  <div className="info-item">
+                    <div className="info-label"><i className="fas fa-envelope"></i> Email</div>
+                    <div className="info-value">{user.email}</div>
+                  </div>
+                  <div className="info-item">
+                    <div className="info-label"><i className="fas fa-calendar-alt"></i> Joined</div>
+                    <div className="info-value">{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</div>
+                  </div>
+                </div>
+
+                <h3>Change Password</h3>
+                <div className="password-change">
+                  <input
+                    type="password"
+                    placeholder="New password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Confirm new password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <button onClick={updatePassword}>Update Password</button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
-  </div>
   );
 }
 
