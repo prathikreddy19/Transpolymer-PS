@@ -12,9 +12,13 @@ from PIL import Image
 
 app = FastAPI()
 
+# ✅ Add your deployed frontend domain here
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Adjust if deployed
+    allow_origins=[
+        "http://localhost:3000",
+        "https://transpolymer.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
