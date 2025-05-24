@@ -138,23 +138,6 @@ function UserProfile() {
                     <div className="info-value">{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</div>
                   </div>
                 </div>
-
-                <h3>Change Password</h3>
-                <div className="password-change">
-                  <input
-                    type="password"
-                    placeholder="New password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Confirm new password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                  <button onClick={updatePassword}>Update Password</button>
-                </div>
               </div>
             )}
           </>
