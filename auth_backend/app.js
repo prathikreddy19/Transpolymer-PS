@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 import userRoutes from "./routes/userRoute.js";
 import searchHistoryRoute from "./routes/searchHistoryRoute.js";
-import resetRequestRoute from "./routes/ResetRequestRoute.js";
+import resetRequestRoute from "./routes/resetRequestRoute.js";
 import adminRoutes from "./routes/adminRoute.js";
 import connectDB from "./db/connect.js";
 
