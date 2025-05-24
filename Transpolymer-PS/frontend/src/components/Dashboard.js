@@ -40,7 +40,7 @@ function Dashboard({ onLogout }) {
   // ---------- HISTORY LOAD ----------
   useEffect(() => {
     if (userLoggedIn) {
-      fetch('https://auth-backend-4ro8.onrender.com/api/search-history', { credentials: 'include' })
+      fetch('http://localhost:3000/api/search-history', { credentials: 'include' })
         .then(r => r.json())
         .then(data => setSearchHistory(data.map(d => d.smiles)))
         .catch(err => console.error('History fetch error:', err));
@@ -84,7 +84,7 @@ function Dashboard({ onLogout }) {
     }
 
     try {
-      const res = await fetch('https://transpolymer-ps-1.onrender.com/predict', {
+      const res = await fetch('http://localhost:8000/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ smiles: smilesString })
@@ -102,7 +102,7 @@ function Dashboard({ onLogout }) {
       setStructureImage(data.structure_image);
 
       if (userLoggedIn) {
-        fetch('https://auth-backend-4ro8.onrender.com/api/search-history', {
+        fetch('http://localhost:3000/api/search-history', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -169,7 +169,7 @@ function Dashboard({ onLogout }) {
     setPolymerName('');
 
     try {
-      const response = await fetch("https://transpolymer-ps-1.onrender.com/polymer-to-smiles", {
+      const response = await fetch("http://localhost:8000/polymer-to-smiles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ polymer_name: userMessage })
