@@ -20,15 +20,17 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!email.trim() || !password.trim()) {
       setError('Please enter both email and password');
       return;
     }
-    setError('');
-    const endpoint = isAdmin
-  ? 'https://auth-backend-4ro8.onrender.com/api/admin/login'
-  : 'https://auth-backend-4ro8.onrender.com/api/users/login';
 
+    setError('');
+
+    const endpoint = isAdmin
+      ? 'https://auth-backend-4ro8.onrender.com/api/admin/login'
+      : 'https://auth-backend-4ro8.onrender.com/api/users/login';
 
     try {
       const res = await fetch(endpoint, {
@@ -37,7 +39,9 @@ function Login() {
         credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
+
       const data = await res.json();
+
       if (res.ok) {
         if (isAdmin) {
           localStorage.setItem('admin', JSON.stringify(data.admin));
