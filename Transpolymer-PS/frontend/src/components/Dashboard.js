@@ -220,12 +220,13 @@ function Dashboard({ onLogout }) {
   };
 
   const handleLogout = () => {
-    setShowProfileDropdown(false);
-    if (onLogout) {
-      onLogout();
-    }
-    navigate('/login');
-  };
+  localStorage.removeItem('user');
+  localStorage.removeItem('admin');
+  setShowProfileDropdown(false);
+  if (onLogout) onLogout();
+  navigate('/login');
+};
+
 
   const mainContentClass = historyVisible ? 'main-content with-sidebar' : 'main-content';
 
