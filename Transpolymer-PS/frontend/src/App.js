@@ -11,7 +11,7 @@ import Navbar from './components/Navbar';
 import LandingPage from './components/landingpage';
 import UserProfile from './components/UserProfile';
 import ResetRequestForm from './components/ResetRequestForm';
-import ProtectedRoute from './components/ProtectedRoute'; // ✅ Import this
+import ProtectedRoute from './components/ProtectedRoute'; // ✅ Protection
 
 function AppWrapper() {
   return (
@@ -24,7 +24,6 @@ function AppWrapper() {
 function App() {
   const location = useLocation();
 
-  // Hide navbar on both user and admin dashboards
   const hideNavbarOnRoutes = ['/dashboard', '/admin-dashboard'];
   const shouldHideNavbar = hideNavbarOnRoutes.includes(location.pathname);
 
@@ -33,26 +32,38 @@ function App() {
       {!shouldHideNavbar && <Navbar />}
 
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/about" element={<AboutUs />} />
-        
-        {/* ✅ Protected Routes */}
-        <Route path="/dashboard" element={
-          <ProtectedRoute role="user">
-            <Dashboard />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin-dashboard" element={
-          <ProtectedRoute role="admin">
-            <AdminDashboard />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/" element={<LandingPage />} />
         <Route path="/reset" element={<ResetRequestForm />} />
+        <Route path="/forgot-password/:token" element={<ForgotPassword />} />
+        <Route path="/about" element={<AboutUs />} />
+
+        {/* ✅ Protected Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute role="user">
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute role="user">
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
