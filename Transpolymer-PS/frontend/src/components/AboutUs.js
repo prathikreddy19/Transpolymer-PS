@@ -76,7 +76,7 @@ function AboutUs() {
           </div>
           <div className="team-member">
             <div className="member-photo placeholder"></div>
-            <h4>D.L Sravya</h4>
+            <h4>Sravya Sharma</h4>
             <p className="member-title"></p>
             <p className="member-bio">
             Computer Science and Engineering with Data Science
